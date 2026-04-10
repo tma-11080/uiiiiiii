@@ -64,7 +64,7 @@ MainText.Size                  = UDim2.new(0, 200, 0, 200)
 MainText.Position              = UDim2.fromScale(0.5, 0.47)
 MainText.AnchorPoint           = Vector2.new(0.5, 0.5)
 MainText.BackgroundTransparency = 1
-MainText.Image                 = "rbxassetid://102272836959278"
+MainText.Image                 = "rbxassetid://91128364514479"
 MainText.ImageTransparency     = 1
 MainText.ScaleType             = Enum.ScaleType.Fit
 MainText.ZIndex                = 3
@@ -123,7 +123,7 @@ _G.MacLolStartupRunning = false
 
 -- ここにコードを貼る↓
 local userScript = [[
-a
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/tma-11080/mac-lol-hub.v2/refs/heads/main/loader.luau"))()
 ]]
 
 if userScript:match("%S") then
