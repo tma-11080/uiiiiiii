@@ -51,7 +51,7 @@ for _ = 1, 160 do
 end
 
 -- 数字テキスト
-local MainText = Instance.new("TextLabel")
+local MainText = Instance.new("ImageLabel")
 MainText.Size                  = UDim2.new(0.9, 0, 0, 70)
 MainText.Position              = UDim2.fromScale(0.5, 0.47)
 MainText.AnchorPoint           = Vector2.new(0.5, 0.5)
