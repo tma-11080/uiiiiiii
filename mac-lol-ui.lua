@@ -1,7 +1,15 @@
 local TweenService = game:GetService("TweenService")
 
+-- 重複起動防止
+if _G.MacLolStartupRunning then return end
+_G.MacLolStartupRunning = true
+
 local GUI_PARENT = (typeof(gethui) == "function" and gethui())
                or game:GetService("CoreGui")
+
+-- 既に起動中のGUIがあれば削除
+local existing = GUI_PARENT:FindFirstChild("MacLolStartup")
+if existing then existing:Destroy() end
 
 local BG_COLOR   = Color3.fromRGB(43, 46, 59)
 local STAR_COLOR = Color3.fromRGB(210, 248, 254)
@@ -39,7 +47,7 @@ for _ = 1, 160 do
         while s and s.Parent do
             local dur = math.random(20, 50) / 10
             TweenService:Create(s, TweenInfo.new(dur, Enum.EasingStyle.Sine), {
-                Position             = UDim2.fromScale(
+                Position = UDim2.fromScale(
                     math.clamp(s.Position.X.Scale + math.random(-15, 15) / 100, 0, 1),
                     math.clamp(s.Position.Y.Scale + math.random(-15, 15) / 100, 0, 1)
                 ),
@@ -50,17 +58,15 @@ for _ = 1, 160 do
     end)
 end
 
--- 数字テキスト
+-- アイコン画像
 local MainText = Instance.new("ImageLabel")
-MainText.Size                  = UDim2.new(0.9, 0, 0, 70)
+MainText.Size                  = UDim2.new(0, 200, 0, 200)
 MainText.Position              = UDim2.fromScale(0.5, 0.47)
 MainText.AnchorPoint           = Vector2.new(0.5, 0.5)
 MainText.BackgroundTransparency = 1
-MainText.Text                  = "rbxassetid://102272836959278" 
-MainText.TextColor3            = TEXT_COLOR
-MainText.TextSize              = 44
-MainText.Font                  = Enum.Font.BuilderSansExtraBold
-MainText.TextTransparency      = 1
+MainText.Image                 = "rbxassetid://102272836959278"
+MainText.ImageTransparency     = 1
+MainText.ScaleType             = Enum.ScaleType.Fit
 MainText.ZIndex                = 3
 MainText.Parent                = BG
 
@@ -71,12 +77,12 @@ Scale.Parent = MainText
 -- mac-lol-ui
 local SubText = Instance.new("TextLabel")
 SubText.Size                   = UDim2.new(0.9, 0, 0, 28)
-SubText.Position               = UDim2.new(0.5, 0, 0.47, 42)
+SubText.Position               = UDim2.new(0.5, 0, 0.47, 110)
 SubText.AnchorPoint            = Vector2.new(0.5, 0)
 SubText.BackgroundTransparency = 1
 SubText.Text                   = "mac-lol-ui"
 SubText.TextColor3             = TEXT_COLOR
-SubText.TextSize               = 15
+SubText.TextSize               = 30
 SubText.Font                   = Enum.Font.BuilderSansMedium
 SubText.TextTransparency       = 1
 SubText.ZIndex                 = 3
@@ -93,7 +99,7 @@ task.wait(0.4)
 Pon:Play()
 
 TweenService:Create(Scale,    TweenInfo.new(0.25, Enum.EasingStyle.Back),  {Scale = 1.08}):Play()
-TweenService:Create(MainText, TweenInfo.new(0.2),                           {TextTransparency = 0}):Play()
+TweenService:Create(MainText, TweenInfo.new(0.2),                           {ImageTransparency = 0}):Play()
 task.wait(0.25)
 TweenService:Create(Scale,    TweenInfo.new(0.15, Enum.EasingStyle.Sine),  {Scale = 1.0}):Play()
 task.wait(0.15)
@@ -103,7 +109,7 @@ task.wait(2.0)
 
 -- フェードアウト
 TweenService:Create(BG,       TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
-TweenService:Create(MainText, TweenInfo.new(0.4), {TextTransparency = 1}):Play()
+TweenService:Create(MainText, TweenInfo.new(0.4), {ImageTransparency = 1}):Play()
 TweenService:Create(SubText,  TweenInfo.new(0.4), {TextTransparency = 1}):Play()
 for _, obj in BG:GetChildren() do
     if obj:IsA("Frame") then
@@ -113,3 +119,13 @@ end
 
 task.wait(0.6)
 StartGui:Destroy()
+_G.MacLolStartupRunning = false
+
+-- ここにコードを貼る↓
+local userScript = [[
+a
+]]
+
+if userScript:match("%S") then
+    loadstring(userScript)()
+end
